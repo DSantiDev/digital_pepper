@@ -1,0 +1,767 @@
+/* Interaction effects use transforms and opacity; touch does not depend on hover. */
+.motion-button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 240ms ease,
+    background-color 240ms ease,
+    color 240ms ease,
+    box-shadow 240ms ease;
+}
+.motion-button::after {
+  content: '';
+  position: absolute;
+  inset: -50% -30%;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 65%
+  );
+  transform: translateX(-110%);
+}
+.motion-button svg,
+.site-header a svg,
+.service-block svg,
+.project-card svg {
+  flex-shrink: 0;
+  transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.motion-button:active:not(:disabled),
+.menu-toggle:active {
+  scale: 0.97;
+}
+.motion-button:focus-visible {
+  box-shadow: 0 0 0 5px rgba(189, 120, 255, 0.2);
+}
+.motion-button:disabled {
+  transform: none;
+  box-shadow: none;
+}
+.motion-nav-link {
+  position: relative;
+}
+.motion-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+}
+.motion-nav-link svg {
+  transition: transform 220ms ease;
+}
+.motion-nav-link[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+.site-header nav .motion-nav-link[aria-current='page'],
+.site-header .motion-nav-link[data-active='true'] {
+  text-decoration: none;
+}
+.motion-nav-link:focus-visible::after,
+.motion-nav-link[aria-current='page']::after,
+.motion-nav-link[data-active='true']::after {
+  transform: scaleX(1);
+}
+.brand-link .logo-mark {
+  transition:
+    filter 260ms ease,
+    transform 260ms ease;
+}
+#services-navigation {
+  transform-origin: top center;
+  animation: menu-arrive 200ms ease both;
+}
+#services-navigation a {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+#services-navigation a:focus-visible svg {
+  transform: translate(3px, -3px);
+}
+.mobile-navigation {
+  transform-origin: top center;
+  animation: menu-arrive 220ms ease both;
+}
+.mobile-navigation a {
+  animation: mobile-link-arrive 280ms ease both;
+}
+.mobile-navigation a:nth-child(2n) {
+  animation-delay: 35ms;
+}
+.mobile-navigation a:nth-child(3n) {
+  animation-delay: 70ms;
+}
+.menu-toggle > span > span {
+  transition: transform 220ms ease;
+}
+.menu-toggle[aria-expanded='true'] > span > span:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+.menu-toggle[aria-expanded='true'] > span > span:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+.contact-form label {
+  transition: color 220ms ease;
+}
+.contact-form label:focus-within {
+  color: #c58aff;
+}
+.contact-form :is(input, select, textarea) {
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+.contact-form :is(input, select, textarea):focus-visible {
+  box-shadow: 0 2px 0 #b969fa;
+  background-color: rgba(189, 120, 255, 0.035);
+}
+.form-feedback:not(:empty) {
+  animation: feedback-arrive 240ms ease both;
+}
+.service-block {
+  border: 1px solid transparent;
+}
+.service-block h2,
+.service-block p,
+.service-block span {
+  transition: color 240ms ease;
+}
+.service-block:focus-visible {
+  background: #251330;
+  color: white;
+}
+.service-block:focus-visible :is(p, span) {
+  color: rgba(255, 255, 255, 0.75);
+}
+.outcome-row {
+  border-radius: 12px;
+  transition: background-color 240ms ease;
+}
+.outcome-row > span {
+  transition: transform 240ms ease;
+}
+/* Opt-in entrances: observer unavailable = normal visible content. */
+[data-reveal][data-motion-state] {
+  transition:
+    opacity 520ms ease var(--reveal-delay, 0ms),
+    translate 520ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+    transform 320ms ease,
+    box-shadow 320ms ease,
+    background-color 240ms ease,
+    color 240ms ease;
+}
+[data-reveal][data-motion-state='pending'] {
+  opacity: 0;
+  translate: 0 18px;
+}
+[data-reveal][data-motion-state='visible'],
+[data-reveal][data-motion-state='pending']:focus-within {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(169, 85, 233, 0.22);
+  }
+  .motion-button:hover:not(:disabled)::after {
+    animation: button-sheen 650ms ease both;
+  }
+  .motion-button:hover:not(:disabled) svg,
+  #services-navigation a:hover svg {
+    transform: translate(3px, -3px);
+  }
+  .motion-nav-link:hover::after {
+    transform: scaleX(1);
+  }
+  .brand-link:hover .logo-mark {
+    transform: rotate(-7deg) scale(1.06);
+    filter: drop-shadow(0 0 9px rgba(189, 120, 255, 0.6));
+  }
+  .service-block:hover {
+    border-color: rgba(189, 120, 255, 0.4);
+    box-shadow: 0 20px 50px rgba(68, 23, 102, 0.18);
+  }
+  .project-card:hover {
+    box-shadow: 0 16px 44px rgba(128, 62, 180, 0.2);
+  }
+  .project-card:hover svg {
+    transform: translate(3px, -3px);
+  }
+  .outcome-row:hover {
+    background-color: rgba(113, 48, 197, 0.045);
+  }
+  .outcome-row:hover > span {
+    transform: translateX(4px);
+  }
+}
+@keyframes menu-arrive {
+  from {
+    opacity: 0;
+    translate: 0 -7px;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@keyframes mobile-link-arrive {
+  from {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes button-sheen {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+@keyframes feedback-arrive {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal][data-motion-state='pending'] {
+    opacity: 1;
+    translate: none;
+  }
+  #services-navigation,
+  .mobile-navigation,
+  .mobile-navigation a,
+  .form-feedback:not(:empty),
+  .motion-button:hover:not(:disabled)::after {
+    animation: none;
+  }
+  .motion-button:hover:not(:disabled),
+  .motion-button:hover:not(:disabled) svg,
+  #services-navigation a:hover svg,
+  .project-card:hover svg,
+  .brand-link:hover .logo-mark,
+  .outcome-row:hover > span {
+    transform: none;
+  }
+  .motion-button:active:not(:disabled),
+  .menu-toggle:active {
+    scale: 1;
+  }
+}
+
+/* Page-wide motion rhythm: introductions, editorial blocks and closing content. */
+.hero-copy > *,
+.page-intro > :is(h1, p, span, div, form) {
+  animation: editorial-arrive 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hero-copy > :nth-child(2),
+.page-intro > :nth-child(2) {
+  animation-delay: 80ms;
+}
+.hero-copy > :nth-child(3),
+.page-intro > :nth-child(3) {
+  animation-delay: 160ms;
+}
+.motion-title {
+  text-wrap: balance;
+}
+.motion-heading {
+  position: relative;
+}
+.motion-heading :is(.font-serif, .text-\[\#bd78ff\], .text-\[\#7130c5\]) {
+  transition: text-shadow 300ms ease;
+}
+.method-steps > div {
+  position: relative;
+  padding-bottom: 10px;
+}
+.method-steps > div::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: #7130c5;
+  transform: scaleX(0.3);
+  transform-origin: left;
+  opacity: 0.35;
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
+}
+.method-steps strong {
+  display: inline-block;
+  transition:
+    transform 300ms ease,
+    color 300ms ease;
+}
+.orb {
+  transition: filter 450ms ease;
+}
+.orb-core {
+  transition: box-shadow 450ms ease;
+}
+.motion-feature {
+  position: relative;
+  transition: background-color 300ms ease;
+}
+.motion-feature::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #7130c5, #bd78ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.motion-feature > span {
+  transition:
+    transform 300ms ease,
+    background-color 300ms ease,
+    color 300ms ease;
+}
+.motion-feature h3 {
+  transition: color 300ms ease;
+}
+.media-card {
+  transition:
+    box-shadow 400ms ease,
+    border-color 400ms ease;
+}
+.media-card h3,
+.media-card p {
+  transition: transform 400ms ease;
+}
+.ai-video {
+  transition: box-shadow 450ms ease;
+}
+.culture-value {
+  transition:
+    border-color 300ms ease,
+    background-color 300ms ease,
+    transform 300ms ease;
+}
+.culture-value strong {
+  transition: color 300ms ease;
+}
+.culture-grid img {
+  transition:
+    filter 450ms ease,
+    transform 450ms ease,
+    box-shadow 450ms ease;
+}
+.timeline-item h3 {
+  transition: color 300ms ease;
+}
+.motion-footer {
+  position: relative;
+}
+.motion-footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #bd78ff, transparent);
+  opacity: 0.2;
+  transform: scaleX(0.4);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+.motion-footer span {
+  transition: color 300ms ease;
+}
+.contact-form label > span {
+  transition:
+    color 250ms ease,
+    translate 250ms ease;
+}
+.contact-form label:focus-within > span {
+  translate: 0 -2px;
+}
+/* Hidden-by-JS states have precedence over legacy section classes. */
+.reveal[data-motion-state='pending'],
+.process-step[data-motion-state='pending'] {
+  opacity: 0;
+  translate: 0 18px;
+}
+.reveal[data-motion-state='pending']:focus-within,
+.process-step[data-motion-state='pending']:focus-within {
+  opacity: 1;
+  translate: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-heading:hover
+    :is(.font-serif, .text-\[\#bd78ff\], .text-\[\#7130c5\]) {
+    text-shadow: 0 0 26px rgba(166, 92, 230, 0.26);
+  }
+  .method-steps > div:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  .method-steps > div:hover strong {
+    transform: translateY(-3px);
+    color: #7130c5;
+  }
+  .orb:hover {
+    filter: drop-shadow(0 12px 30px rgba(113, 48, 197, 0.18));
+  }
+  .orb:hover .orb-core {
+    box-shadow:
+      0 0 0 12px rgba(113, 48, 197, 0.06),
+      0 0 60px rgba(113, 48, 197, 0.25);
+  }
+  .motion-feature:hover {
+    background-color: rgba(113, 48, 197, 0.035);
+  }
+  .motion-feature:hover::after {
+    transform: scaleX(1);
+  }
+  .motion-feature:hover > span {
+    transform: translateY(-4px) rotate(-6deg);
+  }
+  .motion-feature:hover h3,
+  .timeline-item:hover h3 {
+    color: #7130c5;
+  }
+  .media-card:hover {
+    border-color: rgba(189, 120, 255, 0.45);
+    box-shadow: 0 15px 48px rgba(113, 48, 197, 0.15);
+  }
+  .media-card:hover h3,
+  .media-card:hover p {
+    transform: translateY(-4px);
+  }
+  .ai-video:hover {
+    box-shadow: 0 0 65px rgba(168, 77, 236, 0.16);
+  }
+  .culture-value:hover {
+    border-color: rgba(189, 120, 255, 0.5);
+  }
+  .culture-value:hover strong {
+    color: #d2a6ff;
+  }
+  .culture-grid img:hover {
+    box-shadow: 0 12px 32px rgba(189, 120, 255, 0.15);
+  }
+  .motion-footer:hover::before {
+    opacity: 0.85;
+    transform: scaleX(1);
+  }
+  .motion-footer span:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+@keyframes editorial-arrive {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy > *,
+  .page-intro > :is(h1, p, span, div, form) {
+    animation: none;
+  }
+  .reveal[data-motion-state='pending'],
+  .process-step[data-motion-state='pending'] {
+    opacity: 1;
+    translate: none;
+  }
+  .contact-form label:focus-within > span {
+    translate: none;
+  }
+  .motion-feature:hover > span,
+  .method-steps > div:hover strong,
+  .media-card:hover h3,
+  .media-card:hover p {
+    transform: none;
+  }
+}
+
+/* Floating contact action, shared by every route and below the loading screen. */
+.whatsapp-widget {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 60;
+  animation: whatsapp-arrive 480ms cubic-bezier(0.2, 0.7, 0.2, 1) 900ms both;
+}
+.whatsapp-fab {
+  position: relative;
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  border-radius: 50%;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+.whatsapp-fab__surface {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  border: 1px solid rgba(220, 183, 255, 0.5);
+  background: radial-gradient(circle at 30% 20%, #ac67e5, #7130c5 58%, #4e1b7e);
+  box-shadow:
+    0 8px 30px rgba(40, 12, 62, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+.whatsapp-fab__surface img {
+  display: block;
+  transition: transform 260ms ease;
+}
+.whatsapp-fab__halo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(189, 120, 255, 0.65);
+  pointer-events: none;
+  animation: whatsapp-pulse 2600ms ease-out 1200ms 3 both;
+}
+.whatsapp-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  width: min(260px, calc(100vw - 118px));
+  padding: 14px 18px;
+  display: grid;
+  gap: 5px;
+  border: 1px solid rgba(189, 120, 255, 0.3);
+  border-radius: 16px;
+  background: rgba(24, 16, 32, 0.97);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  color: white;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(8px, -50%);
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease,
+    visibility 200ms ease;
+  pointer-events: none;
+}
+.whatsapp-tooltip strong {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.whatsapp-tooltip > span {
+  color: #c58bff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.whatsapp-fab:focus-visible .whatsapp-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+}
+.whatsapp-fab:focus-visible .whatsapp-fab__surface {
+  box-shadow:
+    0 0 0 5px rgba(189, 120, 255, 0.25),
+    0 10px 35px rgba(113, 48, 197, 0.4);
+}
+.whatsapp-fab:active .whatsapp-fab__surface {
+  transform: scale(0.96);
+}
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-fab:hover .whatsapp-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%);
+  }
+  .whatsapp-fab:hover .whatsapp-fab__surface {
+    transform: translateY(-3px) scale(1.05);
+    border-color: #d4a4ff;
+    box-shadow: 0 12px 40px rgba(113, 48, 197, 0.5);
+  }
+  .whatsapp-fab:hover img {
+    transform: rotate(-8deg);
+  }
+}
+@keyframes whatsapp-arrive {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes whatsapp-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  to {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-widget,
+  .whatsapp-fab__halo {
+    animation: none;
+  }
+  .whatsapp-fab__halo {
+    display: none;
+  }
+  .whatsapp-fab:hover .whatsapp-fab__surface,
+  .whatsapp-fab:active .whatsapp-fab__surface,
+  .whatsapp-fab:hover img {
+    transform: none;
+  }
+}
+
+/* The progress action sits in the same floating column as WhatsApp. */
+.scroll-top-widget {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: calc(max(22px, env(safe-area-inset-bottom)) + 78px);
+  z-index: 60;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 10px;
+  pointer-events: none;
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease,
+    translate 220ms ease;
+}
+.scroll-top-widget--visible {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  pointer-events: auto;
+}
+.scroll-top-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  color: #eedaff;
+  border: 1px solid rgba(189, 120, 255, 0.22);
+  background: radial-gradient(circle at 35% 20%, #392044, #181020 70%);
+  box-shadow: 0 8px 24px rgba(13, 9, 18, 0.3);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+.scroll-top-ring {
+  position: absolute;
+  inset: -1px;
+  rotate: -90deg;
+  pointer-events: none;
+}
+.scroll-top-ring__track {
+  stroke: rgba(189, 120, 255, 0.15);
+  stroke-width: 2;
+}
+.scroll-top-ring__value {
+  stroke: #bd78ff;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.scroll-top-arrow {
+  transition: transform 240ms ease;
+}
+.scroll-top-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  white-space: nowrap;
+  padding: 10px 14px;
+  border: 1px solid rgba(189, 120, 255, 0.3);
+  border-radius: 12px;
+  background: rgba(24, 16, 32, 0.97);
+  color: #eedaff;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  translate: 6px 0;
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    visibility 200ms ease,
+    translate 200ms ease;
+}
+.scroll-top-button:focus-visible .scroll-top-tooltip {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+}
+.scroll-top-button:focus-visible {
+  box-shadow: 0 0 0 5px rgba(189, 120, 255, 0.2);
+}
+.scroll-top-button:active {
+  transform: scale(0.96);
+}
+@media (hover: hover) and (pointer: fine) {
+  .scroll-top-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(113, 48, 197, 0.3);
+  }
+  .scroll-top-button:hover .scroll-top-arrow {
+    transform: translateY(-3px);
+  }
+  .scroll-top-button:hover .scroll-top-tooltip {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-top-widget,
+  .scroll-top-tooltip {
+    translate: none;
+  }
+  .scroll-top-button:hover,
+  .scroll-top-button:active,
+  .scroll-top-button:hover .scroll-top-arrow {
+    transform: none;
+  }
+}

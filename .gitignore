@@ -1,0 +1,33 @@
+# Dependencias y almacenes locales
+node_modules/
+.pnpm-store/
+
+# Compilaciones, cobertura y archivos temporales
+dist/
+coverage/
+.vite/
+.cache/
+*.tsbuildinfo
+*.log
+*.tmp
+
+# Variables de entorno: conservar solo la plantilla documentada
+.env
+.env.*
+!.env.example
+
+# Contactos y bases de datos locales
+data/
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# Archivos del sistema y editores
+.DS_Store
+.AppleDouble
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
